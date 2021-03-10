@@ -1,4 +1,5 @@
 "use strict";
+var core;
 (function (core) {
     class Router {
         constructor() {

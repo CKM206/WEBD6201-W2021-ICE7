@@ -1,5 +1,6 @@
 "use strict";
-((core) => {
+var core;
+(function (core) {
     class Contact {
         constructor(fullName = "", contactNumber = "", emailAddress = "") {
             this.FullName = fullName;

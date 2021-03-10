@@ -1,7 +1,7 @@
 // Router Class
 namespace core
 {
-    export class Router {
+    class Router {
 
         private m_activeLink: string;
         private m_routingTable: string[];
@@ -84,9 +84,10 @@ namespace core
         {
             return this.m_routingTable.toString();
         }
-    }
 
-}
+    }
+    core.Router = Router;
+})(core || (core = {}));
 
 // TODO: The code Below should be in its own file.
 let router = new core.Router();

@@ -1,7 +1,7 @@
 // Router Class
 namespace core
 {
-    export class Router {
+    class Router {
 
         private m_activeLink: string;
         private m_routingTable: string[];
@@ -84,6 +84,7 @@ namespace core
         {
             return this.m_routingTable.toString();
         }
+
     }
 
 }
