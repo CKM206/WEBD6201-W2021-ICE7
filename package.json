@@ -11,5 +11,8 @@
     "@popperjs/core": "^2.6.0",
     "bootstrap": "^5.0.0-beta1",
     "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.5"
   }
 }
