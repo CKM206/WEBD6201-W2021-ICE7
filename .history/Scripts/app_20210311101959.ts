@@ -241,13 +241,7 @@ namespace core
           }
 
           // return to the contact list
-          loadLink("contact");
-        });
-
-        $("#cancelButton").on("click", function()
-        {
-          // return to the contact list
-          loadLink("contact");
+          loadLink("contact-list");
         });
     }
 

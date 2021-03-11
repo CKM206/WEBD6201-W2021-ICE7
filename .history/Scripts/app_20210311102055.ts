@@ -245,10 +245,10 @@ namespace core
         });
 
         $("#cancelButton").on("click", function()
-        {
-          // return to the contact list
-          loadLink("contact");
-        });
+      {
+        // return to the contact list
+        loadLink("contact");
+      });
     }
 
     function displayContactList(): void

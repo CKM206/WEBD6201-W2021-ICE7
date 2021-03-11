@@ -101,7 +101,7 @@ var core;
     }
     function displayContact() {
         formValidation();
-        $("#sendButton").on("click", (event) => {
+        $("#sendButton").on("click", () => {
             let subscribeCheckbox = $("#subscribeCheckbox")[0];
             let fullName = $("#fullName")[0];
             let contactNumber = $("#contactNumber")[0];
@@ -113,7 +113,10 @@ var core;
                     localStorage.setItem(key, contact.serialize());
                 }
             }
-            loadLink("contact-list");
+            loadLink("contact");
+        });
+        $("#cancelButton").on("click", function () {
+            loadLink("contact");
         });
     }
     function displayContactList() {
