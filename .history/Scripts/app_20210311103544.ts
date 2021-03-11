@@ -302,11 +302,11 @@ namespace core
            loadLink("contact-list"); // refresh the page
          });
          
-         
+         //let addButton = $("#addButton");
          $("#addButton").on("click", function() 
          {
-           //console.log("Clicked!")
-           loadLink("edit");
+           console.log("Clicked!")
+           //loadLink("edit");
           
          });
       }
