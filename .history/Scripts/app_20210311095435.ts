@@ -218,7 +218,8 @@ namespace core
 
         $("#sendButton").on("click", (event)=> 
         {
-          
+          // Disable Default
+          event.preventDefault();
           // Get each InputElement from the page
           let subscribeCheckbox = $("#subscribeCheckbox")[0] as HTMLInputElement;
           let fullName = $("#fullName")[0] as HTMLInputElement;

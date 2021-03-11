@@ -173,7 +173,7 @@ var core;
             contact.ContactNumber = $("#contactNumber").val().toString();
             contact.EmailAddress = $("#emailAddress").val().toString();
             localStorage.setItem(key, contact.serialize());
-            location.href = "/contact-list";
+            loadLink("contact-list");
         });
         $("#cancelButton").on("click", function () {
             loadLink("contact-list");
