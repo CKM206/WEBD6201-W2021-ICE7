@@ -128,7 +128,7 @@ namespace core
 
     function displayHome(): void
     {
-        
+        console.log("Home Page Function Called!");
     }
 
     function displayAbout(): void

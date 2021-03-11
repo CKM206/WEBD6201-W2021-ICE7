@@ -63,7 +63,6 @@ namespace core
   function loadLink(link: string, data: string = ""): void
   {
 
-    // Highlight the new link
     highlightActiveLink(link, data);
     
     // Load the content of the link
@@ -128,7 +127,7 @@ namespace core
 
     function displayHome(): void
     {
-        
+        console.log("Home Page Function Called!");
     }
 
     function displayAbout(): void

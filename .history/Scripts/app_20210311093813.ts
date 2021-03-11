@@ -23,11 +23,6 @@ namespace core
   }
 
 
-  /**
-   * This function highlights the active link in the navbar
-   * @param link 
-   * @param data 
-   */
   function highlightActiveLink(link: string, data: string = ""): void
   {
     // Remove the current ActiveLink Highlight before moving on
@@ -62,11 +57,25 @@ namespace core
    */
   function loadLink(link: string, data: string = ""): void
   {
+    // Remove the current ActiveLink Highlight before moving on
+    $(`#${router.ActiveLink}`).removeClass("active");
 
-    // Highlight the new link
-    highlightActiveLink(link, data);
-    
-    // Load the content of the link
+    // Special Case for the logout
+    if (link == "logout")
+    {
+      // Set the ActiveLink to redirect to login
+      router.ActiveLink = "login";
+      // Clear the Session storage
+      sessionStorage.clear();
+    }
+    // All other cases
+    else
+    {
+      router.ActiveLink = link;
+      router.LinkData = data;
+    }
+
+    $(`#${router.ActiveLink}`).addClass("active");
     loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
     history.pushState({}, "", router.ActiveLink);
   }
@@ -128,7 +137,7 @@ namespace core
 
     function displayHome(): void
     {
-        
+        console.log("Home Page Function Called!");
     }
 
     function displayAbout(): void

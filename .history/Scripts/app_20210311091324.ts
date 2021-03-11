@@ -7,7 +7,8 @@ namespace core
     $("ul>li>a").off("click");
     $("ul>li>a").off("mouseover");
 
-    // Then re-add the events...
+    // Then re-add the events
+
     // Loop through ach anchor tag of the unordered List (page links)
     //-Add event listener / handler to allow for
     // Content injection
@@ -24,35 +25,6 @@ namespace core
 
 
   /**
-   * This function highlights the active link in the navbar
-   * @param link 
-   * @param data 
-   */
-  function highlightActiveLink(link: string, data: string = ""): void
-  {
-    // Remove the current ActiveLink Highlight before moving on
-    $(`#${router.ActiveLink}`).removeClass("active");
-
-    // Special Case for the logout
-    if (link == "logout")
-    {
-      // Set the ActiveLink to redirect to login
-      router.ActiveLink = "login";
-      // Clear the Session storage
-      sessionStorage.clear();
-    }
-    // All other cases
-    else
-    {
-      router.ActiveLink = link;
-      router.LinkData = data;
-    }
-
-    $(`#${router.ActiveLink}`).addClass("active");
-  }
-
-
-  /**
    *  loadLink(string) - A custom page loading function that will replace
    *                   href links, ensuring proper page loading on 
    *                   deployment. Optionally, each loaded link may also include
@@ -62,13 +34,12 @@ namespace core
    */
   function loadLink(link: string, data: string = ""): void
   {
-
-    // Highlight the new link
-    highlightActiveLink(link, data);
-    
-    // Load the content of the link
+    $(`#${router.ActiveLink}`).removeClass("active");
+    router.ActiveLink = link;
+    router.LinkData = data;
     loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
-    history.pushState({}, "", router.ActiveLink);
+    $(`#${router.ActiveLink}`).addClass("active");
+    history.replaceState({}, "", router.ActiveLink);
   }
 
 
@@ -128,7 +99,7 @@ namespace core
 
     function displayHome(): void
     {
-        
+        console.log("Home Page Function Called!");
     }
 
     function displayAbout(): void
@@ -428,43 +399,44 @@ namespace core
 
     function toggleLogin() : void
     {
-      // Make a reference to the contactListLink 
-      let contactListLink = $("#contact-list")[0]
 
+      console.log("Toggled Login");
       // if user is logged in
       if(sessionStorage.getItem("user"))
-      { // Logged In ----------------------------------------
+      {
         // swap out the login link for logout
         $("#loginListItem").html(
         `<a id="logout" class="nav-link" aria-current="page"><i class="fas fa-sign-out-alt"></i> Logout</a>`
         );
-       
 
+        $("#logout").on("click", function()
+        {
+          // perform logout
+          sessionStorage.clear();
+
+          // redirect back to login
+          loadLink("login");
+        });
+       
+        // Make a reference to the contactListLink 
+        let contactListLink = $("#contactListLink")[0]
         // Check if the contactListLink exists
-        if (!contactListLink)
+        if (contactListLink)
         {
           // If it doesnt, create it!
           $(`<li class="nav-item">
-          <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
+          <a id="contactListLink" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
           </li>`).insertBefore("#loginListItem");
         }
               
       }
       else
-      { // Logged Out ---------------------------------------
+      {
         // swap back the login link for logout
         $("#loginListItem").html(
           `<a id="login" class="nav-link" aria-current="page"><i class="fas fa-sign-in-alt"></i> Login</a>`
           );
 
-        // If the Contact-list link exists  
-        if (contactListLink)
-        {  
-          // Remove the link
-          $("#contact-list").remove();
-        }
-
-          
        
       }
 

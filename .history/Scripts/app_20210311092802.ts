@@ -24,11 +24,14 @@ namespace core
 
 
   /**
-   * This function highlights the active link in the navbar
-   * @param link 
-   * @param data 
+   *  loadLink(string) - A custom page loading function that will replace
+   *                   href links, ensuring proper page loading on 
+   *                   deployment. Optionally, each loaded link may also include
+   *                   optional data using the data arg.
+   * @param {string} link 
+   * @param {string }data [data=""]
    */
-  function highlightActiveLink(link: string, data: string = ""): void
+  function loadLink(link: string, data: string = ""): void
   {
     // Remove the current ActiveLink Highlight before moving on
     $(`#${router.ActiveLink}`).removeClass("active");
@@ -48,27 +51,9 @@ namespace core
       router.LinkData = data;
     }
 
-    $(`#${router.ActiveLink}`).addClass("active");
-  }
-
-
-  /**
-   *  loadLink(string) - A custom page loading function that will replace
-   *                   href links, ensuring proper page loading on 
-   *                   deployment. Optionally, each loaded link may also include
-   *                   optional data using the data arg.
-   * @param {string} link 
-   * @param {string }data [data=""]
-   */
-  function loadLink(link: string, data: string = ""): void
-  {
-
-    // Highlight the new link
-    highlightActiveLink(link, data);
-    
-    // Load the content of the link
     loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
-    history.pushState({}, "", router.ActiveLink);
+    $(`#${router.ActiveLink}`).addClass("active");
+    history.replaceState({}, "", router.ActiveLink);
   }
 
 
@@ -128,7 +113,7 @@ namespace core
 
     function displayHome(): void
     {
-        
+        console.log("Home Page Function Called!");
     }
 
     function displayAbout(): void
@@ -429,7 +414,7 @@ namespace core
     function toggleLogin() : void
     {
       // Make a reference to the contactListLink 
-      let contactListLink = $("#contact-list")[0]
+      let contactListLink = $("#contactListLink")[0]
 
       // if user is logged in
       if(sessionStorage.getItem("user"))
@@ -445,7 +430,7 @@ namespace core
         {
           // If it doesnt, create it!
           $(`<li class="nav-item">
-          <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
+          <a id="contactListLink" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
           </li>`).insertBefore("#loginListItem");
         }
               
@@ -461,7 +446,7 @@ namespace core
         if (contactListLink)
         {  
           // Remove the link
-          $("#contact-list").remove();
+          $("#contactListLink").remove();
         }
 
           
