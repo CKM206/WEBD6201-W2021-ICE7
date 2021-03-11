@@ -23,7 +23,6 @@ namespace core
         {
             this.m_activeLink = link;
         }
-        
         //* Link Data
         get LinkData(): string
         {

@@ -4,19 +4,16 @@ namespace core
   /**
    *  loadLink(string) - A custom page loading function that will replace
    *                   href links, ensuring proper page loading on 
-   *                   deployment. Optionally, each loaded link may also include
-   *                   optional data using the data arg.
-   * @param {string} link 
-   * @param {string }data [data=""]
+   *                   deployment.
+   * @param link loadLink(string)
    */
-  function loadLink(link: string, data: string = ""): void
+  function loadLink(link: string): void
   {
     // Loop through ach anchor tag of the unordered List (page links)
     //-Add event listener / handler to allow for
     // Content injection
     $(`#${router.ActiveLink}`).removeClass("active");
-    router.ActiveLink = link;
-    router.LinkData = data;
+    router.ActiveLink = link
     loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
     $(`#${router.ActiveLink}`).addClass("active");
     history.replaceState({}, "", router.ActiveLink);
@@ -34,8 +31,6 @@ namespace core
     {
       // Load the Header Data
       $("header").html(data);
-
-      toggleLogin();
 
       // Highlight the Active Page
       $(`#${pageName}`).addClass("active");
@@ -206,6 +201,8 @@ namespace core
       // First Check to see if someone is logged in
       authGuard();
 
+      toggleLogin();
+
       if (localStorage.length > 0) 
       {
 
@@ -239,9 +236,8 @@ namespace core
         contactList.innerHTML = data;
 
         $("button.edit").on("click", function(){
-          // Load the edit page, include the data to be passed 
-          //-to the link
-          loadLink("edit", $(this).val().toString());
+          // TODO: Fix this case later: Special case has the link + data
+          location.href = "/edit#" + $(this).val();
          });
 
          $("button.delete").on("click", function(){
@@ -262,9 +258,7 @@ namespace core
 
     function displayEdit(): void
     {
-      // Get the linkData from router, remember this data is given
-      //-to router when linknig to the edit page through contact-list
-      let key = router.LinkData;
+      let key = location.hash.substring(1);
 
       let contact = new core.Contact();
 
@@ -357,7 +351,7 @@ namespace core
             
 
             // redirect user to secure area - contact-list.html
-            loadLink("contact-list");
+            loadLink("/contact-list");
           }
           else
           {
@@ -414,7 +408,7 @@ namespace core
         });
        
         $(`<li class="nav-item">
-        <a id="contactListLink" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
+        <a id="contactListLink" class="nav-link" aria-current="page" href="/contact-list"><i class="fas fa-users fa-lg"></i> Contact List</a>
       </li>`).insertBefore("#loginListItem");
       
       }
@@ -433,7 +427,7 @@ namespace core
       if(!sessionStorage.getItem("user"))
       {
         // redirect back to login page
-        loadLink("login");
+        location.href = "/login";
       }
     }
 

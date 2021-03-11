@@ -4,8 +4,7 @@ namespace core
   /**
    *  loadLink(string) - A custom page loading function that will replace
    *                   href links, ensuring proper page loading on 
-   *                   deployment. Optionally, each loaded link may also include
-   *                   optional data using the data arg.
+   *                   deployment.
    * @param {string} link 
    * @param {string }data [data=""]
    */
@@ -15,8 +14,7 @@ namespace core
     //-Add event listener / handler to allow for
     // Content injection
     $(`#${router.ActiveLink}`).removeClass("active");
-    router.ActiveLink = link;
-    router.LinkData = data;
+    router.ActiveLink = link
     loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
     $(`#${router.ActiveLink}`).addClass("active");
     history.replaceState({}, "", router.ActiveLink);
@@ -239,9 +237,8 @@ namespace core
         contactList.innerHTML = data;
 
         $("button.edit").on("click", function(){
-          // Load the edit page, include the data to be passed 
-          //-to the link
-          loadLink("edit", $(this).val().toString());
+          // TODO: Fix this case later: Special case has the link + data
+          location.href = "/edit#" + $(this).val();
          });
 
          $("button.delete").on("click", function(){
@@ -262,9 +259,7 @@ namespace core
 
     function displayEdit(): void
     {
-      // Get the linkData from router, remember this data is given
-      //-to router when linknig to the edit page through contact-list
-      let key = router.LinkData;
+      let key = location.hash.substring(1);
 
       let contact = new core.Contact();
 

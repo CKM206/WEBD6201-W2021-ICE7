@@ -13,7 +13,6 @@ namespace core
         }
 
         // Public Properties
-        //* Active Link
         get ActiveLink(): string
         {
             return this.m_activeLink;
@@ -23,8 +22,7 @@ namespace core
         {
             this.m_activeLink = link;
         }
-        
-        //* Link Data
+
         get LinkData(): string
         {
             return this.m_linkData;

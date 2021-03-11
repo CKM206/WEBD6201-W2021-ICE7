@@ -1,16 +1,21 @@
 "use strict";
 var core;
 (function (core) {
+    function loadLink(link, data = "") {
+        $(`#${router.ActiveLink}`).removeClass("active");
+        router.ActiveLink = link;
+        router.LinkData = data;
+        loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
+        $(`#${router.ActiveLink}`).addClass("active");
+        history.replaceState({}, "", router.ActiveLink);
+    }
     function loadHeader(pageName) {
         $.get("./Views/components/header.html", function (data) {
             $("header").html(data);
+            toggleLogin();
             $(`#${pageName}`).addClass("active");
             $("a").on("click", function () {
-                $(`#${router.ActiveLink}`).removeClass("active");
-                router.ActiveLink = $(this).attr("id");
-                loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
-                $(`#${router.ActiveLink}`).addClass("active");
-                history.replaceState({}, "", router.ActiveLink);
+                loadLink($(this).attr("id"));
             });
             $("a").on("mouseover", function () {
                 $(this).css('cursor', 'pointer');
@@ -99,7 +104,6 @@ var core;
     }
     function displayContactList() {
         authGuard();
-        toggleLogin();
         if (localStorage.length > 0) {
             let contactList = document.getElementById("contactList");
             let data = "";
@@ -121,21 +125,21 @@ var core;
             }
             contactList.innerHTML = data;
             $("button.edit").on("click", function () {
-                location.href = "/edit#" + $(this).val();
+                loadLink("edit", $(this).val().toString());
             });
             $("button.delete").on("click", function () {
                 if (confirm("Are you sure?")) {
                     localStorage.removeItem($(this).val().toString());
                 }
-                location.href = "/contact-list";
+                loadLink("contact-list");
             });
             $("#addButton").on("click", function () {
-                location.href = "/edit";
+                loadLink("edit");
             });
         }
     }
     function displayEdit() {
-        let key = location.hash.substring(1);
+        let key = router.LinkData;
         let contact = new core.Contact();
         if (key != "") {
             contact.deserialize(localStorage.getItem(key));
@@ -159,7 +163,7 @@ var core;
             location.href = "/contact-list";
         });
         $("#cancelButton").on("click", function () {
-            location.href = "/contact-list";
+            loadLink("contact-list");
         });
     }
     function displayLogin() {
@@ -181,7 +185,7 @@ var core;
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
-                    location.href = "/contact-list";
+                    loadLink("contact-list");
                 }
                 else {
                     username.trigger("focus").trigger("select");
@@ -191,7 +195,7 @@ var core;
         });
         $("#cancelButton").on("click", function () {
             document.forms[0].reset();
-            location.href = "/home";
+            loadLink("home");
         });
     }
     function displayRegister() {
@@ -204,13 +208,13 @@ var core;
             $("#loginListItem").html(`<a id="logout" class="nav-link" aria-current="page"><i class="fas fa-sign-out-alt"></i> Logout</a>`);
             $("#logout").on("click", function () {
                 sessionStorage.clear();
-                location.href = "/login";
+                loadLink("login");
             });
             $("#logout").on("mouseover", function () {
                 $(this).css('cursor', 'pointer');
             });
             $(`<li class="nav-item">
-        <a id="contactListLink" class="nav-link" aria-current="page" href="/contact-list"><i class="fas fa-users fa-lg"></i> Contact List</a>
+        <a id="contactListLink" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
       </li>`).insertBefore("#loginListItem");
         }
         else {
@@ -219,7 +223,7 @@ var core;
     }
     function authGuard() {
         if (!sessionStorage.getItem("user")) {
-            location.href = "/login";
+            loadLink("login");
         }
     }
     function ActiveLinkCallback(activeLink) {

@@ -262,9 +262,7 @@ namespace core
 
     function displayEdit(): void
     {
-      // Get the linkData from router, remember this data is given
-      //-to router when linknig to the edit page through contact-list
-      let key = router.LinkData;
+      let key = location.hash.substring(1);
 
       let contact = new core.Contact();
 
