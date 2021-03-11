@@ -113,6 +113,7 @@ var core;
                     localStorage.setItem(key, contact.serialize());
                 }
             }
+            loadLink("contact-list");
         });
     }
     function displayContactList() {
