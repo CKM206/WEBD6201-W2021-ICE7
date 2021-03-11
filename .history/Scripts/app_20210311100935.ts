@@ -472,7 +472,7 @@ namespace core
 
       // Regardless, add the correct active links
       addLinkEvents();
-      highlightActiveLink(router.ActiveLink);
+      highlightActiveLink(link);
     }
 
     function authGuard(): void

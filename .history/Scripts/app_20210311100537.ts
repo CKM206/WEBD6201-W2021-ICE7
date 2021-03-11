@@ -28,7 +28,7 @@ namespace core
    * @param link 
    * @param data 
    */
-  function highlightActiveLink(link: string): void
+  function highlightActiveLink(link: string, data: string = ""): void
   {
     // Remove the current ActiveLink Highlight before moving on
     $(`#${router.ActiveLink}`).removeClass("active");
@@ -45,7 +45,7 @@ namespace core
     else
     {
       router.ActiveLink = link;
-      
+      router.LinkData = data;
     }
 
     $(`#${router.ActiveLink}`).addClass("active");
@@ -64,11 +64,10 @@ namespace core
   {
 
     // Highlight the new link
-    highlightActiveLink(link);
+    highlightActiveLink(link, data);
     
     // Load the content of the link
     loadContent(router.ActiveLink, ActiveLinkCallback(router.ActiveLink));
-    router.LinkData = data;
     history.pushState({}, "", router.ActiveLink);
   }
 
