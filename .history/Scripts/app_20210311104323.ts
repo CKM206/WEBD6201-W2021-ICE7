@@ -287,6 +287,12 @@ namespace core
         }
 
         contactList.innerHTML = data;
+        $("#addButton").on("click", function() 
+        {
+          //console.log("Clicked!")
+          loadLink("edit");
+         
+        });
 
         $("button.edit").on("click", function(){
           // Load the edit page, include the data to be passed 
@@ -301,13 +307,8 @@ namespace core
            }
            loadLink("contact-list"); // refresh the page
          });
-      }
-      $("#addButton").on("click", function() 
-        {
-          //console.log("Clicked!")
-          loadLink("edit");
          
-        });
+      }
     }
 
     function displayEdit(): void

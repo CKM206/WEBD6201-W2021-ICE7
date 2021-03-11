@@ -301,13 +301,14 @@ namespace core
            }
            loadLink("contact-list"); // refresh the page
          });
-      }
-      $("#addButton").on("click", function() 
-        {
-          //console.log("Clicked!")
-          loadLink("edit");
          
-        });
+         $("#addButton").on("click", function() 
+         {
+           //console.log("Clicked!")
+           loadLink("edit");
+          
+         });
+      }
     }
 
     function displayEdit(): void

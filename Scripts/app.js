@@ -150,10 +150,10 @@ var core;
                 }
                 loadLink("contact-list");
             });
-            $("#addButton").on("click", function () {
-                loadLink("edit");
-            });
         }
+        $("#addButton").on("click", function () {
+            loadLink("edit");
+        });
     }
     function displayEdit() {
         let key = router.LinkData;
